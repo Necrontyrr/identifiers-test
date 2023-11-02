@@ -1,6 +1,7 @@
 package com.oysta.privilegedtest
 
 import android.Manifest
+import android.app.admin.DevicePolicyManager
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tv: TextView
     private lateinit var tv2: TextView
     private lateinit var tv3: TextView
+    private lateinit var tvOwner: TextView
 
     private val permissionLocation = Manifest.permission.ACCESS_FINE_LOCATION
     private val permissionBluetooth = Manifest.permission.BLUETOOTH_CONNECT
@@ -34,6 +36,19 @@ class MainActivity : AppCompatActivity() {
         tv = findViewById(R.id.textView)
         tv2 = findViewById(R.id.textView2)
         tv3 = findViewById(R.id.textView3)
+        tvOwner = findViewById(R.id.textView4)
+
+        var doMessage = "App's device owner state is unknown"
+
+        if (savedInstanceState == null) {
+            val manager = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
+            doMessage = if (manager.isDeviceOwnerApp(applicationContext.packageName)) {
+                "App is device owner"
+            } else {
+                "App is not device owner"
+            }
+        }
+        tvOwner.text = doMessage
 
         btn.setOnClickListener {
             //method 1

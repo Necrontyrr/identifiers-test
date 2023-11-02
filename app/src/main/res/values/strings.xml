@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PrivilegedTest</string>
+    <string name="profile_name">Sample Device Owner</string>
 </resources>
